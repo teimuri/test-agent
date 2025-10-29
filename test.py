@@ -1,7 +1,7 @@
 print("Hello World")
 import torch
 import torch.nn as nn
-
+import time
 # 1. Define a simple neural network model
 class SimpleModel(nn.Module):
     def __init__(self):
@@ -49,3 +49,4 @@ print(f"Input tensor's device after moving: {input_tensor_gpu.device}")
 # The computation will happen on the GPU
 output = model(input_tensor_gpu)
 print(f"Output tensor's device: {output.device}")
+time.sleep(20)
