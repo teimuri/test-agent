@@ -16,7 +16,7 @@ class SimpleModel(nn.Module):
 
 # 2. Check for GPU availability and set the device
 # This line checks if an NVIDIA GPU is available and PyTorch can use it (CUDA).
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = torch.device("cuda")
 print(f"Using device: {device} 💻")
 
 
@@ -38,7 +38,7 @@ print(f"Device of layer1's weights: {next(model.parameters()).device}")
 # also be on the same device as the model.
 print("\n--- Example Usage ---")
 # Create a random input tensor on the CPU
-input_tensor_cpu = torch.randn(32, 10) # 32 samples, 10 features
+input_tensor_cpu = torch.randn(320, 1000) # 32 samples, 10 features
 print(f"Input tensor's initial device: {input_tensor_cpu.device}")
 
 # Move the input tensor to the same device as the model
