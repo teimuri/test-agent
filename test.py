@@ -27,7 +27,7 @@ model = SimpleModel()
 # This is the key step. It moves all of the model's parameters and buffers
 # to the GPU's memory.
 model.to(device)
-
+torch.save(model.state_dict(),"test.pt")
 print("\nModel successfully loaded onto the GPU.")
 # You can verify the device of a model parameter
 print(f"Device of layer1's weights: {next(model.parameters()).device}")
