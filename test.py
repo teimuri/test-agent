@@ -7,11 +7,15 @@ class SimpleModel(nn.Module):
     def __init__(self):
         super(SimpleModel, self).__init__()
         self.layer1 = nn.Linear(in_features=1000, out_features=2000)
-        self.layer2 = nn.Linear(in_features=2000, out_features=5)
+        self.layer2 = nn.Linear(in_features=2000, out_features=2000)
+        self.layer3 = nn.Linear(in_features=2000, out_features=2000)
+        self.layer4 = nn.Linear(in_features=2000, out_features=5)
 
     def forward(self, x):
         x = torch.relu(self.layer1(x))
-        x = self.layer2(x)
+        x = torch.relu(self.layer2(x))
+        x = torch.relu(self.layer3(x))
+        x = self.layer4(x)
         return x
 
 # 2. Check for GPU availability and set the device
@@ -22,7 +26,17 @@ print(f"Using device: {device} 💻")
 
 # 3. Instantiate the model
 model = SimpleModel()
-
+criterion = nn.CrossEntropyLoss()
+optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+inputs = torch.randn(64, 1000).to(device)
+labels = torch.randint(0, 5, (64,)).to(device)
+model.train()
+optimizer.zero_grad()
+outputs = model(inputs)
+loss = criterion(outputs, labels)
+loss.backward()
+optimizer.step()
+model.eval()
 # 4. Move the model to the selected device (GPU or CPU)
 # This is the key step. It moves all of the model's parameters and buffers
 # to the GPU's memory.
