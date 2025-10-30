@@ -21,7 +21,7 @@ task.set_repo(
 
 # Set the script to run from the repo
 task.set_script(
-    script='test.py',  # Path to your training script in the repo
+    entry_point='test.py',  # Path to your training script in the repo
     working_dir='.',  # Working directory relative to repo root (use '.' for root)
 )
 
@@ -35,11 +35,14 @@ hyperparameters = {
     }
 }
 task.connect(hyperparameters)
-
 # Set required Python packages
 # Option 1: Auto-detect from requirements.txt in repo
-task.set_packages(requirements_file='requirements.txt')
-
+task.set_packages([
+    'torch==2.1.2',
+    'numpy',
+    'pandas',
+    'networkx<3.0',
+])
 # Option 2: Manually specify packages
 # task.set_packages([
 #     'torch==2.0.0',
@@ -64,18 +67,15 @@ task.set_packages(requirements_file='requirements.txt')
 #     '--config', 'config.yaml',
 #     '--output-dir', './outputs',
 # )
-
 print(f"Task created: {task.id}")
 print(f"Task URL: {task.get_output_log_web_page()}")
 
-# Mark task as pending so agents can pick it up
-task.mark_started()
-task.mark_completed()
+# Mark task as completed (required before enqueuing)
+task.mark_stopped()
+# Enqueue the task to be executed by an agent
+print("\nEnqueuing task...")
+Task.enqueue(task=task.id, queue_name='taha-san_queue')  # Change 'default' to your queue name
 
-print("\nTask is ready to be enqueued!")
-print("To run this task:")
-print("1. Go to the ClearML Web UI")
-print("2. Find this task and click 'Enqueue'")
-print("3. Select a queue where a ClearML agent is listening")
-print("\nOr enqueue programmatically:")
-print(f"Task.enqueue(task='{task.id}', queue_name='default')")
+print(f"\nTask enqueued successfully!")
+print(f"Make sure you have an agent running on queue 'default':")
+print("  clearml-agent daemon --queue default --docker")
