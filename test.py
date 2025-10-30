@@ -26,6 +26,7 @@ print(f"Using device: {device} 💻")
 
 # 3. Instantiate the model
 model = SimpleModel()
+model.to(device)
 criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 inputs = torch.randn(64, 1000).to(device)
@@ -40,7 +41,6 @@ model.eval()
 # 4. Move the model to the selected device (GPU or CPU)
 # This is the key step. It moves all of the model's parameters and buffers
 # to the GPU's memory.
-model.to(device)
 torch.save(model.state_dict(),"test.pt")
 print("\nModel successfully loaded onto the GPU.")
 # You can verify the device of a model parameter
