@@ -7,7 +7,7 @@ class SimpleModel(nn.Module):
     def __init__(self):
         super(SimpleModel, self).__init__()
         self.layer1 = nn.Linear(in_features=1000, out_features=2000)
-        self.layer2 = nn.Linear(in_features=200, out_features=5)
+        self.layer2 = nn.Linear(in_features=2000, out_features=5)
 
     def forward(self, x):
         x = torch.relu(self.layer1(x))
