@@ -6,7 +6,7 @@ import time
 class SimpleModel(nn.Module):
     def __init__(self):
         super(SimpleModel, self).__init__()
-        self.layer1 = nn.Linear(in_features=10, out_features=20)
+        self.layer1 = nn.Linear(in_features=100, out_features=20)
         self.layer2 = nn.Linear(in_features=20, out_features=5)
 
     def forward(self, x):
@@ -38,7 +38,7 @@ print(f"Device of layer1's weights: {next(model.parameters()).device}")
 # also be on the same device as the model.
 print("\n--- Example Usage ---")
 # Create a random input tensor on the CPU
-input_tensor_cpu = torch.randn(320, 10) # 32 samples, 10 features
+input_tensor_cpu = torch.randn(320, 100) # 32 samples, 10 features
 print(f"Input tensor's initial device: {input_tensor_cpu.device}")
 
 # Move the input tensor to the same device as the model
