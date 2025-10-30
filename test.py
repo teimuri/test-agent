@@ -58,7 +58,7 @@ print(f"Input tensor's initial device: {input_tensor_cpu.device}")
 # Move the input tensor to the same device as the model
 input_tensor_gpu = input_tensor_cpu.to(device)
 print(f"Input tensor's device after moving: {input_tensor_gpu.device}")
-
+raise ValueError("test error")
 # Now you can perform a forward pass
 # The computation will happen on the GPU
 output = model(input_tensor_gpu)
