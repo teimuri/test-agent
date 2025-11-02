@@ -37,13 +37,6 @@ hyperparameters = {
 task.connect(hyperparameters)
 # Set required Python packages
 # Option 1: Auto-detect from requirements.txt in repo
-task.set_packages([
-    'torch==2.1.2',
-    'numpy<2',
-    'pandas',
-    'networkx<3.0',
-])
-# Option 2: Manually specify packages
 # task.set_packages([
 #     'torch==2.0.0',
 #     'numpy>=1.20.0',
