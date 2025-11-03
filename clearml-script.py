@@ -21,7 +21,7 @@ task.set_repo(
 
 # Set the script to run from the repo
 task.set_script(
-    entry_point='test.py',  # Path to your training script in the repo
+    entry_point='temp/test.py',  # Path to your training script in the repo
     working_dir='.',  # Working directory relative to repo root (use '.' for root)
 )
 
