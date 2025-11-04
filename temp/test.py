@@ -1,5 +1,4 @@
-from ml_trainer import AutoTrainer
-from clearml import Task
+import os
 class CL_Logger():
     def __init__(self):
         pass
