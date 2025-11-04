@@ -18,7 +18,7 @@ class CL_Logger():
 
 
 def get_logger(name="trainer", log_dir="logs", logger_callback=None):
-    print(logger_callback)
+    # print(logger_callback)
 
     os.makedirs(log_dir, exist_ok=True)
     log_path = os.path.join(
@@ -39,5 +39,5 @@ def get_logger(name="trainer", log_dir="logs", logger_callback=None):
 
     return logger_callback(logger) or logger, log_path
 cl_logger = CL_Logger()
-logger, _ =get_logger(log_dir="logs", cl_logger.logger_modifier)
+logger, _ =get_logger(log_dir="logs", logger_callback = cl_logger.logger_modifier)
 logger.info("Starting ClearML Task")
