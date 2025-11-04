@@ -17,7 +17,7 @@ def logger_callback(BaseLogger):
 
         def info(self,message):
             self.logger("base_info",message)
-            pritn("Wow")
+            print("Wow")
 
     cl_logger = CL_Logger(id=1)
     return cl_logger
