@@ -18,7 +18,7 @@ class CL_Logger():
 
 
 def get_logger(name="trainer", log_dir="logs", logger_callback=None):
-
+    print(logger_callback)
 
     os.makedirs(log_dir, exist_ok=True)
     log_path = os.path.join(
