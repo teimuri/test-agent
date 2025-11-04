@@ -1,45 +1,54 @@
 import logging
 import os
 from datetime import datetime
-class CL_Logger():
-    def __init__(self):
-        pass
+class CL_Logger:
+    def __init__(self,id,name="trainer", log_dir="logs"):
+        self.id=id
+        self.LOGGING_TYPES = {"plot" : self.plot, "info": self.info}
+
+    def logger(self,type,*args,**kwargs):
+        if type in self.LOGGING_TYPES:
+            self.LOGGING_TYPES[type](*args,**kwargs)
 
     def plot(self,title,data):
         pass
 
     def info(self,message):
-        self.logger.info(message)
+        self.base_logger.info(message)
         pritn("Wow")
 
-    def logger_modifier(self,logger_func):
-        print(2)
-        self.logger = logger_func
-        logger_func.plot = self.plot
-        logger_func.info = self.info
+cl_logger = CL_Logger(id=1)
+
+def logger_callback(logger_func):
+    logger_func.LOGGING_TYPES.update(cl_logger.LOGGING_TYPES)
 
 
-def get_logger(name="trainer", log_dir="logs", logger_callback=None):
-    # print(logger_callback)
-    print(1)
-    os.makedirs(log_dir, exist_ok=True)
-    log_path = os.path.join(
-        log_dir, f"{name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
-    )
+class BaseLogger:
+    def __init__(self, name="trainer", log_dir="logs"):
+        os.makedirs(log_dir, exist_ok=True)
+        log_path = os.path.join(
+            log_dir, f"{name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
+        )
 
-    logger = logging.getLogger(name)
-    logger.setLevel(logging.INFO)
+        self.base_logger = logging.getLogger(name)
+        self.base_logger.setLevel(logging.INFO)
 
-    if not logger.handlers:
-        fh = logging.FileHandler(log_path)
-        ch = logging.StreamHandler()
-        formatter = logging.Formatter("%(asctime)s | %(levelname)s | %(message)s")
-        fh.setFormatter(formatter)
-        ch.setFormatter(formatter)
-        logger.addHandler(fh)
-        logger.addHandler(ch)
+        if not self.base_logger.handlers:
+            fh = logging.FileHandler(log_path)
+            ch = logging.StreamHandler()
+            formatter = logging.Formatter("%(asctime)s | %(levelname)s | %(message)s")
+            fh.setFormatter(formatter)
+            ch.setFormatter(formatter)
+            self.base_logger.addHandler(fh)
+            self.base_logger.addHandler(ch)
 
-    return logger_callback(logger) or logger, log_path
-cl_logger = CL_Logger()
-logger, _ =get_logger(log_dir="logs", logger_callback = cl_logger.logger_modifier)
-logger.info("Starting ClearML Task")
+        self.LOGGING_TYPES = {"base_info": self.base_logger.info}
+    
+    def logger(self,type,*args,**kwargs):
+        if type in self.LOGGING_TYPES:
+            self.LOGGING_TYPES[type](*args,**kwargs)
+
+logger = BaseLogger()
+logger.logger("base_info","This is a base logger info message.")
+# logger_callback(logger)
+
