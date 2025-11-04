@@ -12,6 +12,7 @@ class CL_Logger():
         pritn("Wow")
 
     def logger_modifier(self,logger_func):
+        print(2)
         logger_func.plot = self.plot
         logger_func.info = self.info
         self.logger = logger_func
@@ -19,7 +20,7 @@ class CL_Logger():
 
 def get_logger(name="trainer", log_dir="logs", logger_callback=None):
     # print(logger_callback)
-
+    print(1)
     os.makedirs(log_dir, exist_ok=True)
     log_path = os.path.join(
         log_dir, f"{name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
