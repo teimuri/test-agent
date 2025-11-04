@@ -1,4 +1,6 @@
+import logging
 import os
+from datetime import datetime
 class CL_Logger():
     def __init__(self):
         pass
