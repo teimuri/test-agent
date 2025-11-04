@@ -1,26 +1,26 @@
 import logging
 import os
 from datetime import datetime
-class CL_Logger:
-    def __init__(self,id,name="trainer", log_dir="logs"):
-        self.id=id
-        self.LOGGING_TYPES = {"plot" : self.plot, "info": self.info}
 
-    def logger(self,type,*args,**kwargs):
-        if type in self.LOGGING_TYPES:
-            self.LOGGING_TYPES[type](*args,**kwargs)
-            
-    def plot(self,title,data):
-        pass
 
-    def info(self,message):
-        self.logger("base_info",message)
-        pritn("Wow")
+def logger_callback(BaseLogger):
+    class CL_Logger(BaseLogger):
+        def __init__(self,id,name="trainer", log_dir="logs"):
+            self.super().__init__(name,log_dir)
+            self.id=id
 
-cl_logger = CL_Logger(id=1)
+            self.LOGGING_TYPES.update({"plot" : self.plot, "info": self.info})
 
-def logger_callback(logger_func):
-    logger_func.LOGGING_TYPES.update(cl_logger.LOGGING_TYPES)
+
+        def plot(self,title,data):
+            pass
+
+        def info(self,message):
+            self.logger("base_info",message)
+            pritn("Wow")
+
+    cl_logger = CL_Logger(id=1)
+    return cl_logger
 
 
 class BaseLogger:
@@ -50,6 +50,6 @@ class BaseLogger:
 
 logger = BaseLogger()
 logger.logger("base_info","This is a base logger info message.")
-logger_callback(logger)
-logger.logger("info","This is a custom info message from CL_Logger.")
+cl_logger = logger_callback(BaseLogger)
+cl_logger.logger("info","This is a custom info message from CL_Logger.")
 
