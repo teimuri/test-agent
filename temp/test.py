@@ -6,7 +6,10 @@ class CL_Logger:
         self.id=id
         self.LOGGING_TYPES = {"plot" : self.plot, "info": self.info}
 
-
+    def logger(self,type,*args,**kwargs):
+        if type in self.LOGGING_TYPES:
+            self.LOGGING_TYPES[type](*args,**kwargs)
+            
     def plot(self,title,data):
         pass
 
