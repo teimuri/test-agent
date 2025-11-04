@@ -6,7 +6,7 @@ from datetime import datetime
 def logger_callback(BaseLogger):
     class CL_Logger(BaseLogger):
         def __init__(self,id,name="trainer", log_dir="logs"):
-            self.super().__init__(name,log_dir)
+            super().__init__(name,log_dir)
             self.id=id
 
             self.LOGGING_TYPES.update({"plot" : self.plot, "info": self.info})
