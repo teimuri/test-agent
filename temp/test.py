@@ -14,9 +14,9 @@ class CL_Logger():
 
     def logger_modifier(self,logger_func):
         print(2)
+        self.logger = logger_func
         logger_func.plot = self.plot
         logger_func.info = self.info
-        self.logger = logger_func
 
 
 def get_logger(name="trainer", log_dir="logs", logger_callback=None):
