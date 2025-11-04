@@ -6,15 +6,12 @@ class CL_Logger:
         self.id=id
         self.LOGGING_TYPES = {"plot" : self.plot, "info": self.info}
 
-    def logger(self,type,*args,**kwargs):
-        if type in self.LOGGING_TYPES:
-            self.LOGGING_TYPES[type](*args,**kwargs)
 
     def plot(self,title,data):
         pass
 
     def info(self,message):
-        self.base_logger.info(message)
+        self.logger("base_info",message)
         pritn("Wow")
 
 cl_logger = CL_Logger(id=1)
@@ -50,5 +47,6 @@ class BaseLogger:
 
 logger = BaseLogger()
 logger.logger("base_info","This is a base logger info message.")
-# logger_callback(logger)
+logger_callback(logger)
+logger.logger("info","This is a custom info message from CL_Logger.")
 
