@@ -2,7 +2,7 @@ import logging
 import os
 from datetime import datetime
 
-from cl_logger import logger_callback
+from cl_logger import logger_callback,cfg
 
 
 
@@ -33,6 +33,7 @@ class BaseLogger:
 
 logger = BaseLogger()
 logger.logger("base_info","This is a base logger info message.")
+cfg.update({"task_id":12345})
 cl_logger = logger_callback(BaseLogger)
 cl_logger.logger("info","This is a custom info message from CL_Logger.")
 

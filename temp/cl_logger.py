@@ -1,4 +1,4 @@
-my_id = 55
+cfg = {'task_id': None}
 def logger_callback(BaseLogger):
     class CL_Logger(BaseLogger):
         def __init__(self,id,name="trainer", log_dir="logs"):
@@ -15,5 +15,5 @@ def logger_callback(BaseLogger):
             self.logger("base_info",message)
             print(f"Wow id is: {self.id}")
 
-    cl_logger = CL_Logger(my_id)
+    cl_logger = CL_Logger(cfg['task_id'])
     return cl_logger
