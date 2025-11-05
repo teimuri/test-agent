@@ -17,6 +17,7 @@ def logger_callback(BaseLogger):
             )
         
         def plot(self,title,series,data,iteration=0):
+            print("Plotting data:",data)
             plt.plot(**data)
             self.logger.report_matplotlib_figure(
                 title=title,
