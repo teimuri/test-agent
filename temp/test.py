@@ -32,7 +32,7 @@ class BaseLogger:
 
 task = Task.init(
     project_name="taha-sama",  # Name of the ClearML project
-    task_name=f"API Training",  # Name of the task
+    task_name=f"API Trainin2g",  # Name of the task
     task_type=Task.TaskTypes.optimizer,  # Type of the task (could also be "training", "testing", etc.)
 )
 logger = BaseLogger()
