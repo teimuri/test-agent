@@ -2,7 +2,7 @@ import logging
 import os
 from datetime import datetime
 from clearml import Task
-import matplotlib.pyplot as plt
+
 from cl_logger import logger_callback,cfg
 
 
@@ -32,7 +32,8 @@ class BaseLogger:
 
 task = Task.init(
     project_name="taha-sama",  # Name of the ClearML project
-    task_name=f"API Training3",  # Name of the task
+    task_name=f"API Training",  # Name of the task
+    task_type=Task.TaskTypes.optimizer,  # Type of the task (could also be "training", "testing", etc.)
 )
 logger = BaseLogger()
 logger.info("This is a base logger info message.")
@@ -44,21 +45,7 @@ data = {
     "Y":[4,5,6],
 }
 cl_logger.plot("test-plot","series1",data)
-logger = task.get_logger()
-plt.plot(X=[1, 2, 3], Y=[4, 5, 6])
-# self.logger.report_matplotlib_figure(
-#     title=title,
-#     series=series,
-#     figure=plt.gcf(),
-#     iteration=iteration,
-# )
-logger.report_matplotlib_figure(
-    title="My Plot",
-    series="series_name2",
-    figure=plt.gcf(),
-    iteration=6,
-)
-plt.close()
+
 cl_logger.scaler("test-scaler","accuracy",0.45,iteration=1)
 cl_logger.scaler("test-scaler","accuracy",0.75,iteration=2)
 cl_logger.scaler("test-scaler","accuracy",0.80,iteration=3)

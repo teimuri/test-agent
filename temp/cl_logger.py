@@ -18,20 +18,15 @@ def logger_callback(BaseLogger):
         
         def plot(self,title,series,data,iteration=0):
 
-            plt.plot(X=[1, 2, 3], Y=[4, 5, 6])
-            # self.logger.report_matplotlib_figure(
-            #     title=title,
-            #     series=series,
-            #     figure=plt.gcf(),
-            #     iteration=iteration,
-            # )
+            plt.plot(data.pop('X'),data.pop('Y'),**data)
             self.logger.report_matplotlib_figure(
-                title="My Plot",
-                series="series_name2",
+                title=title,
+                series=series,
                 figure=plt.gcf(),
-                iteration=5,
+                iteration=iteration,
             )
             plt.close()
+        
         def hyperparameters(self,params,name="Hyperparameters"):
             self.task.connect(params,name=name)
 
