@@ -29,5 +29,5 @@ def logger_callback(BaseLogger):
             self.task.connect(params,name=name)
 
 
-    cl_logger = CL_Logger(cfg['task_id'])
+    cl_logger = CL_Logger()
     return cl_logger
