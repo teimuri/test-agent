@@ -1,19 +1,33 @@
-cfg = {'task_id': None}
+from clearml import Task
+import matplotlib.pyplot as plt
+cfg = {'task': None}
 def logger_callback(BaseLogger):
     class CL_Logger(BaseLogger):
-        def __init__(self,id,name="trainer", log_dir="logs"):
+        def __init__(self,name="trainer", log_dir="logs"):
             super().__init__(name,log_dir)
-            self.id=id
+            self.task = cfg['task']
+            self.logger = self.task.get_logger()
 
-            self.LOGGING_TYPES.update({"plot" : self.plot, "info": self.info})
+        def scaler(self, title, series, value, iteration=0):
+            self.logger.report_scalar(
+                title=title,
+                series=series,
+                value=value,
+                iteration=iteration,
+            )
+        
+        def plot(self,title,series,data,iteration=0):
+            plt.plot(**data)
+            self.logger.report_matplotlib_figure(
+                title=title,
+                series=series,
+                figure=plt.gcf(),
+                iteration=iteration,
+            )
+        
+        def hyperparameters(self,params,name="Hyperparameters"):
+            self.task.connect(params,name=name)
 
-
-        def plot(self,title,data):
-            pass
-
-        def info(self,message):
-            self.logger("base_info",message)
-            print(f"Wow id is: {self.id}")
 
     cl_logger = CL_Logger(cfg['task_id'])
     return cl_logger

@@ -1,6 +1,7 @@
 import logging
 import os
 from datetime import datetime
+from clearml import Task
 
 from cl_logger import logger_callback,cfg
 
@@ -25,15 +26,27 @@ class BaseLogger:
             self.base_logger.addHandler(fh)
             self.base_logger.addHandler(ch)
 
-        self.LOGGING_TYPES = {"base_info": self.base_logger.info}
-    
-    def logger(self,type,*args,**kwargs):
-        if type in self.LOGGING_TYPES:
-            self.LOGGING_TYPES[type](*args,**kwargs)
+        
+    def info(self,message):
+        self.base_logger.info(message)
 
+task = Task.init(
+    project_name="taha-sama",  # Name of the ClearML project
+    task_name=f"API Training",  # Name of the task
+    task_type=Task.TaskTypes.optimizer,  # Type of the task (could also be "training", "testing", etc.)
+)
 logger = BaseLogger()
-logger.logger("base_info","This is a base logger info message.")
-cfg.update({"task_id":12345})
+logger.info("This is a base logger info message.")
+cfg.update({"task_id":task.id})
 cl_logger = logger_callback(BaseLogger)
-cl_logger.logger("info","This is a custom info message from CL_Logger.")
+cl_logger.info("This is a custom info message from CL_Logger.")
+data = {
+    "X":[1,2,3],
+    "Y":[4,5,6],
+}
+cl_logger.plot("test-plot","series1",data)
 
+cl_logger.scaler("test-scaler","accuracy",0.45,iteration=1)
+cl_logger.scaler("test-scaler","accuracy",0.75,iteration=2)
+cl_logger.scaler("test-scaler","accuracy",0.80,iteration=3)
+cl_logger.scaler("test-scaler","accuracy",0.82,iteration=4)
