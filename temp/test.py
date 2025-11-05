@@ -37,7 +37,7 @@ task = Task.init(
 )
 logger = BaseLogger()
 logger.info("This is a base logger info message.")
-cfg.update({"task_id":task.id})
+cfg.update({"task":task})
 cl_logger = logger_callback(BaseLogger)
 cl_logger.info("This is a custom info message from CL_Logger.")
 data = {
