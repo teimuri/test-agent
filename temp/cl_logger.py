@@ -25,7 +25,7 @@ def logger_callback(BaseLogger):
             #     figure=plt.gcf(),
             #     iteration=iteration,
             # )
-            logger.report_matplotlib_figure(
+            self.logger.report_matplotlib_figure(
                 title="My Plot",
                 series="series_name2",
                 figure=plt.gcf(),
