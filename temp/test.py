@@ -50,3 +50,5 @@ cl_logger.scaler("test-scaler","accuracy",0.45,iteration=1)
 cl_logger.scaler("test-scaler","accuracy",0.75,iteration=2)
 cl_logger.scaler("test-scaler","accuracy",0.80,iteration=3)
 cl_logger.scaler("test-scaler","accuracy",0.82,iteration=4)
+
+task.close()
