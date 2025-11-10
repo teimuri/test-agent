@@ -61,7 +61,9 @@ optimizer = HyperParameterOptimizer(
     max_number_of_concurrent_tasks=2,
     optimizer_class=search_strategy,
     execution_queue='taha-san_queue',
-    total_max_jobs=10
+    total_max_jobs=10,
+    min_iteration_per_job=0,
+    max_iteration_per_job=0,
 )
 
 # start optimization
