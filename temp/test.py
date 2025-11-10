@@ -6,7 +6,7 @@ from sklearn.metrics import accuracy_score
 import argparse
 
 # Initialize ClearML task
-# task = Task.init(project_name="HPO Example2", task_name="train", reuse_last_task_id=False)
+task = Task.init(project_name="HPO Example", task_name="train", reuse_last_task_id=False)
 # Parse hyperparameters
 parser = argparse.ArgumentParser()
 parser.add_argument("--n_estimators", type=int, default=100)
@@ -25,5 +25,5 @@ clf.fit(X_train, y_train)
 acc = accuracy_score(y_test, clf.predict(X_test))
 
 # Report metric to ClearML
-# task.get_logger().report_scalar("accuracy", "test", iteration=0, value=acc)
+task.get_logger().report_scalar("accuracy", "test", iteration=0, value=acc)
 print(f"Accuracy: {acc:.4f}")
