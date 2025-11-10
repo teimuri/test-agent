@@ -58,6 +58,7 @@ params = {
 params = task.connect(params)
 # task.mark_stopped()
 task.close()
+base_task = task
 # Task.enqueue(task=task.id,queue_name="taha-san_queue")
 
 # initialize the HPO controller task
@@ -74,7 +75,7 @@ args = {
     'max_depth': 5,
 }
 args = task.connect(args)
-task.mark_stopped()
+
 
 from clearml.automation.optuna import OptimizerOptuna
 search_strategy = OptimizerOptuna
