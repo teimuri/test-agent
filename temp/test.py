@@ -7,6 +7,7 @@ import argparse
 
 # Initialize ClearML task
 task = Task.init()
+raise ValueError(task.id)
 # Parse hyperparameters
 parser = argparse.ArgumentParser()
 parser.add_argument("--n_estimators", type=int, default=100)
