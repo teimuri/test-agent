@@ -31,25 +31,7 @@ task.set_packages([
          # Add other packages you need
      ])
 
-# Task.enqueue(task=task.id,queue_name="taha-san_queue")
-# task = Task.init(
-#         project_name="taha-sama",
-#         task_name="train_model_from_repo",
-#         repo="https://github.com/teimuri/test-agent.git",
-#         branch="HPO",               # or any branch name
-#         commit=None,                 # or a specific commit hash
-#         script="temp/train.py",           # file inside that repo
-#         working_directory=".",       # relative to repo root
-#         task_type=Task.TaskTypes.training,
-#         )
 
-# base_task = task
-# task.set_packages([
-#          'scikit-learn',
-#          'clearml',
-#          'networkx<3.5',  # Pin to older version compatible with Python 3.10
-#          # Add other packages you need
-#      ])
 params = {
     'n_estimators': 100,
     'max_depth': 5,
