@@ -7,7 +7,6 @@ import argparse
 
 # Initialize ClearML task
 # task = Task.init(project_name="HPO Example2", task_name="train", reuse_last_task_id=False)
-raise ValueError(102020)
 # Parse hyperparameters
 parser = argparse.ArgumentParser()
 parser.add_argument("--n_estimators", type=int, default=100)
