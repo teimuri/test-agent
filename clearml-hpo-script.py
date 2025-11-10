@@ -3,24 +3,53 @@ from clearml.automation import HyperParameterOptimizer, UniformIntegerParameterR
 from clearml.automation import RandomSearch, GridSearch  # or other strategy
 
 from clearml import Task
-task = Task.init(
-        project_name="taha-sama",
-        task_name="train_model_from_repo",
-        repo="https://github.com/teimuri/test-agent.git",
-        branch="HPO",               # or any branch name
-        commit=None,                 # or a specific commit hash
-        script="temp/train.py",           # file inside that repo
-        working_directory=".",       # relative to repo root
-        task_type=Task.TaskTypes.training,
-        )
 
-base_task = task
+from clearml import Task
+
+task = Task.init(
+    project_name='taha-sama',
+    task_name='train_model_from_repo',
+    task_type=Task.TaskTypes.training
+)
+
+# Configure the git repository
+task.set_repo(
+    repo='https://github.com/teimuri/test-agent',
+    branch='HPO',  # or 'master', 'dev', etc.
+    commit=None,  # Use None for latest, or specify a commit hash
+)
+
+task.set_script(
+    entry_point='temp/test.py',  # Path to your training script in the repo
+    working_dir='.',  # Working directory relative to repo root (use '.' for root)
+)
+
 task.set_packages([
          'scikit-learn',
          'clearml',
          'networkx<3.5',  # Pin to older version compatible with Python 3.10
          # Add other packages you need
      ])
+
+# Task.enqueue(task=task.id,queue_name="taha-san_queue")
+# task = Task.init(
+#         project_name="taha-sama",
+#         task_name="train_model_from_repo",
+#         repo="https://github.com/teimuri/test-agent.git",
+#         branch="HPO",               # or any branch name
+#         commit=None,                 # or a specific commit hash
+#         script="temp/train.py",           # file inside that repo
+#         working_directory=".",       # relative to repo root
+#         task_type=Task.TaskTypes.training,
+#         )
+
+# base_task = task
+# task.set_packages([
+#          'scikit-learn',
+#          'clearml',
+#          'networkx<3.5',  # Pin to older version compatible with Python 3.10
+#          # Add other packages you need
+#      ])
 params = {
     'n_estimators': 100,
     'max_depth': 5,
@@ -31,19 +60,20 @@ task.mark_stopped()
 # Task.enqueue(task=task.id,queue_name="taha-san_queue")
 
 # initialize the HPO controller task
-# task = Task.init(
-#     project_name='Hyper-Parameter Optimization',
-#     task_name='Automatic Hyper-Parameter Optimization',
-#     task_type=Task.TaskTypes.optimizer,
-#     reuse_last_task_id=False
-# )
+task = Task.init(
+    project_name='Hyper-Parameter Optimization',
+    task_name='Automatic Hyper-Parameter Optimization',
+    task_type=Task.TaskTypes.optimizer,
+    reuse_last_task_id=False
+)
 
-# # connect args
-# args = {
-#     'n_estimators': 100,
-#     'max_depth': 5,
-# }
-# args = task.connect(args)
+# connect args
+args = {
+    'n_estimators': 100,
+    'max_depth': 5,
+}
+args = task.connect(args)
+task.mark_stopped()
 
 from clearml.automation.optuna import OptimizerOptuna
 search_strategy = OptimizerOptuna
