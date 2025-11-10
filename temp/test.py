@@ -6,7 +6,7 @@ from sklearn.metrics import accuracy_score
 import argparse
 
 # Initialize ClearML task
-task = Task.init(project_name="HPO Example", task_name="train", reuse_last_task_id=False)
+task = Task.init(project_name="HPO Example2", task_name="train", reuse_last_task_id=False)
 
 # Parse hyperparameters
 parser = argparse.ArgumentParser()
