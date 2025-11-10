@@ -1,54 +1,30 @@
-import logging
-import os
-from datetime import datetime
 from clearml import Task
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import argparse
 
-from cl_logger import logger_callback,cfg
+# Initialize ClearML task
+task = Task.init(project_name="HPO Example", task_name="train", reuse_last_task_id=False)
 
+# Parse hyperparameters
+parser = argparse.ArgumentParser()
+parser.add_argument("--n_estimators", type=int, default=100)
+parser.add_argument("--max_depth", type=int, default=3)
+args = parser.parse_args()
 
+# Load dataset
+X, y = load_iris(return_X_y=True)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-class BaseLogger:
-    def __init__(self, name="trainer", log_dir="logs"):
-        os.makedirs(log_dir, exist_ok=True)
-        log_path = os.path.join(
-            log_dir, f"{name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
-        )
+# Train model
+clf = RandomForestClassifier(n_estimators=args.n_estimators, max_depth=args.max_depth)
+clf.fit(X_train, y_train)
 
-        self.base_logger = logging.getLogger(name)
-        self.base_logger.setLevel(logging.INFO)
+# Evaluate
+acc = accuracy_score(y_test, clf.predict(X_test))
 
-        if not self.base_logger.handlers:
-            fh = logging.FileHandler(log_path)
-            ch = logging.StreamHandler()
-            formatter = logging.Formatter("%(asctime)s | %(levelname)s | %(message)s")
-            fh.setFormatter(formatter)
-            ch.setFormatter(formatter)
-            self.base_logger.addHandler(fh)
-            self.base_logger.addHandler(ch)
-
-        
-    def info(self,message):
-        self.base_logger.info(message)
-
-task = Task.init(
-    project_name="taha-sama",  # Name of the ClearML project
-    task_name=f"API Training 10",  # Name of the task
-    task_type=Task.TaskTypes.optimizer,  # Type of the task (could also be "training", "testing", etc.)
-)
-logger = BaseLogger()
-logger.info("This is a base logger info message.")
-cfg.update({"task":task})
-cl_logger = logger_callback(BaseLogger)
-cl_logger.info("This is a custom info message from CL_Logger.")
-data = {
-    "X":[1,2,3],
-    "Y":[4,5,6],
-}
-cl_logger.plot("test-plot","series1",data)
-
-cl_logger.scaler("test-scaler","accuracy",0.45,iteration=1)
-cl_logger.scaler("test-scaler","accuracy",0.75,iteration=2)
-cl_logger.scaler("test-scaler","accuracy",0.80,iteration=3)
-cl_logger.scaler("test-scaler","accuracy",0.82,iteration=4)
-
-task.close()
+# Report metric to ClearML
+task.get_logger().report_scalar("accuracy", "test", iteration=0, value=acc)
+print(f"Accuracy: {acc:.4f}")
