@@ -26,5 +26,10 @@ clf.fit(X_train, y_train)
 acc = accuracy_score(y_test, clf.predict(X_test))
 
 # Report metric to ClearML
-task.get_logger().report_scalar("accuracy", "test", iteration=0, value=acc)
-print(f"Accuracy: {acc:.4f}")
+logger = task.get_logger()
+logger.report_scalar(
+    title='accuracy',      # This is objective_metric_title
+    series='test',         # This is objective_metric_series
+    value=acc,
+    iteration=0
+)print(f"Accuracy: {acc:.4f}")

@@ -31,19 +31,19 @@ task.mark_stopped()
 # Task.enqueue(task=task.id,queue_name="taha-san_queue")
 
 # initialize the HPO controller task
-task = Task.init(
-    project_name='Hyper-Parameter Optimization',
-    task_name='Automatic Hyper-Parameter Optimization',
-    task_type=Task.TaskTypes.optimizer,
-    reuse_last_task_id=False
-)
+# task = Task.init(
+#     project_name='Hyper-Parameter Optimization',
+#     task_name='Automatic Hyper-Parameter Optimization',
+#     task_type=Task.TaskTypes.optimizer,
+#     reuse_last_task_id=False
+# )
 
-# connect args
-args = {
-    'n_estimators': 100,
-    'max_depth': 5,
-}
-args = task.connect(args)
+# # connect args
+# args = {
+#     'n_estimators': 100,
+#     'max_depth': 5,
+# }
+# args = task.connect(args)
 
 from clearml.automation.optuna import OptimizerOptuna
 search_strategy = OptimizerOptuna
