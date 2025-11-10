@@ -56,7 +56,8 @@ params = {
 }
 
 params = task.connect(params)
-task.mark_stopped()
+# task.mark_stopped()
+task.close()
 # Task.enqueue(task=task.id,queue_name="taha-san_queue")
 
 # initialize the HPO controller task
