@@ -3,7 +3,7 @@ from clearml.automation import HyperParameterOptimizer, UniformIntegerParameterR
 from clearml.automation import RandomSearch, GridSearch  # or other strategy
 
 from clearml import Task
-task = Task.create(
+task = Task.init(
         project_name="taha-sama",
         task_name="train_model_from_repo",
         repo="https://github.com/teimuri/test-agent.git",

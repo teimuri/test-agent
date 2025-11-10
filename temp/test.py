@@ -8,8 +8,6 @@ import argparse
 # Initialize ClearML task
 task = Task.init()
 params = {
-    # 'n_estimators': 100,  # default value
-    # 'max_depth': 5,       # default value
 }
 params = task.connect(params)
 
@@ -19,7 +17,7 @@ X, y = load_iris(return_X_y=True)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # Train model
-clf = RandomForestClassifier(n_estimators=args.n_estimators, max_depth=args.max_depth)
+clf = RandomForestClassifier(n_estimators=params['n_estimators'], max_depth=params['max_depth'])
 clf.fit(X_train, y_train)
 
 # Evaluate
@@ -31,5 +29,5 @@ logger.report_scalar(
     title='accuracy',      # This is objective_metric_title
     series='test',         # This is objective_metric_series
     value=acc,
-    iteration=0
-)print(f"Accuracy: {acc:.4f}")
+    iteration=0)
+print(f"Accuracy: {acc:.4f}")
