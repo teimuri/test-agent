@@ -7,13 +7,13 @@ import argparse
 
 # Initialize ClearML task
 task = Task.init()
-raise ValueError(task.id)
-# Parse hyperparameters
-parser = argparse.ArgumentParser()
-parser.add_argument("--n_estimators", type=int, default=100)
-parser.add_argument("--max_depth", type=int,required=True)
-args = parser.parse_args()
-print(f"n_estimators: {args.n_estimators}, max_depth: {args.max_depth}")
+params = {
+    # 'n_estimators': 100,  # default value
+    # 'max_depth': 5,       # default value
+}
+params = task.connect(params)
+
+print(f"n_estimators: {params['n_estimators']}, max_depth: {params['max_depth']}")
 # Load dataset
 X, y = load_iris(return_X_y=True)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
