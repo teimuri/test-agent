@@ -69,12 +69,12 @@ task = Task.init(
     reuse_last_task_id=False
 )
 
-# # connect args
-# args = {
-#     'n_estimators': 100,
-#     'max_depth': 5,
-# }
-# args = task.connect(args)
+# connect args
+args = {
+    'n_estimators': 100,
+    'max_depth': 5,
+}
+args = task.connect(args)
 
 
 from clearml.automation.optuna import OptimizerOptuna
@@ -84,8 +84,8 @@ search_strategy = OptimizerOptuna
 optimizer = HyperParameterOptimizer(
     base_task_id=base_task.id,
     hyper_parameters=[
-        UniformIntegerParameterRange('n_estimators', min_value=50, max_value=200, step_size=50),
-        DiscreteParameterRange('max_depth', values=[2,3,5,7]),
+        UniformIntegerParameterRange('General/n_estimators', min_value=50, max_value=200, step_size=50),
+        DiscreteParameterRange('General/max_depth', values=[2,3,5,7]),
     ],
     objective_metric_title='accuracy',
     objective_metric_series='test',

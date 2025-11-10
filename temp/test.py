@@ -8,6 +8,8 @@ import argparse
 # Initialize ClearML task
 task = Task.init()
 params = {
+    'n_estimators': None,
+    'max_depth': None,
 }
 params = task.connect(params)
 
