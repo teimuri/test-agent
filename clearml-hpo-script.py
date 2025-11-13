@@ -38,25 +38,14 @@ params = {
 }
 
 params = task.connect(params)
-# task.mark_stopped()
-task.close()
+task.mark_stopped()
+Task.enqueue(task=task.id,queue_name="taha-san_queue")
+
 base_task = task
 # Task.enqueue(task=task.id,queue_name="taha-san_queue")
 
 # initialize the HPO controller task
-task = Task.init(
-    project_name='Hyper-Parameter Optimization',
-    task_name='Automatic Hyper-Parameter Optimization',
-    task_type=Task.TaskTypes.optimizer,
-    reuse_last_task_id=False
-)
 
-# connect args
-args = {
-    'n_estimators': 100,
-    'max_depth': 5,
-}
-args = task.connect(args)
 
 
 from clearml.automation.optuna import OptimizerOptuna
